@@ -86,7 +86,7 @@ class StudentResource extends Resource
                 Card::make()->schema([
                     Fieldset::make('Data Periodik')->schema([
                         TextInput::make('tb')->label('Tinggi Badan | Cm')->numeric()->maxLength(3),
-                        TextInput::make('bb')->label('Berat Badan | Cm')->numeric()->maxLength(3),
+                        TextInput::make('bb')->label('Berat Badan | Kg')->numeric()->maxLength(3),
                         TextInput::make('lk')->label('Lingkar Kepala | Cm')->numeric()->maxLength(3),
                         TextInput::make('jarak_rumah')->label('Jarak Rumah Ke Sekolah | Km')->numeric()->maxLength(3),
                         TextInput::make('waktu_tempuh')->label('Waktu tempuh | Menit')->numeric()->maxLength(3),
