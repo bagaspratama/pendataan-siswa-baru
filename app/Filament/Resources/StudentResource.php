@@ -32,6 +32,7 @@ class StudentResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-database';
     protected static ?string $navigationLabel = 'Data PD';
 
+
     public static function form(Form $form): Form
     {
         return $form
@@ -122,7 +123,7 @@ class StudentResource extends Resource
                 Card::make()->schema([
                     Fieldset::make('Data Pendukung')->schema([
                         TextInput::make('asal_sekolah')->label('Asal Sekolah')->default('SMPN '),
-                        TextInput::make('no_wa_wali')->label('No Whatsapp Wali | Format 62'),
+                        TextInput::make('no_wa_wali')->label('No Whatsapp Wali | Format 62')->default('62'),
                         Radio::make('kps_pkh')->options([
                             'true' => 'Memiliki KPS PKH',
                             'false' => 'Tidak Memiliki KPS PKH',
@@ -150,10 +151,10 @@ class StudentResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('nisn'),
-                TextColumn::make('nama_lengkap'),
-                TextColumn::make('jurusan'),
-                ImageColumn::make('asal_sekolah')
+                TextColumn::make('nisn')->searchable()->sortable()->label('NISN'),
+                TextColumn::make('nama_lengkap')->searchable()->sortable()->label('Nama Lengkap'),
+                TextColumn::make('jurusan')->searchable()->sortable()->label('Jurusan'),
+                TextColumn::make('asal_sekolah')->searchable()->sortable()->label('Asal Sekolah')
             ])
             ->filters([
                 //
@@ -163,6 +164,7 @@ class StudentResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
+
             ]);
     }
 
@@ -172,6 +174,7 @@ class StudentResource extends Resource
             //
         ];
     }
+
 
     public static function getPages(): array
     {
