@@ -5,6 +5,7 @@ namespace App\Filament\Resources\StudentResource\Pages;
 use App\Filament\Resources\StudentResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
+use pxlrbt\FilamentExcel\Actions\Pages\ExportAction;
 
 class ListStudents extends ListRecords
 {
@@ -14,6 +15,7 @@ class ListStudents extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+            ExportAction::make('export'),
         ];
     }
 }
