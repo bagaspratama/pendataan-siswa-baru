@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+    mysql:
+        image: mysql:8.0
+        container_name: mysql-db
+        restart: always
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: sdksdk
+            MYSQL_DATABASE: laravel
+        volumes:
+            - mysql_data:/var/lib/mysql
+
+volumes:
+    mysql_data:

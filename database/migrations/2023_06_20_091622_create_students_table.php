@@ -46,13 +46,13 @@ return new class extends Migration
             $table->string('pekerjaan_ayah')->nullable();
             $table->string('penghasilan_ayah')->nullable();
             $table->string('asal_sekolah')->nullable();
+            $table->string('tahun_lulus')->nullable();
             $table->string('no_wa_wali')->nullable();
-            $table->string('kps_pkh')->nullable();
             $table->string('kip')->nullable();
-            $table->string('url_pkh')->nullable()->default(null);
+            $table->string('nomor_kartu')->nullable();
+            $table->string('nama_kartu')->nullable();
             $table->string('url_kip')->nullable()->default(null);
             $table->string('url_kk')->nullable()->default(null);
-            $table->string('url_ijazah')->nullable()->default(null);
             $table->string('jurusan')->nullable()->default(null);
             $table->timestamps();
         });

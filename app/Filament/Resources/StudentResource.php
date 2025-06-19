@@ -37,17 +37,23 @@ class StudentResource extends Resource
     {
         return $form
             ->schema([
+                  Card::make()->schema([
+                    Fieldset::make('Keperluan Tarik Data')->schema([
+                        TextInput::make('asal_sekolah')->label('Asal Sekolah')->default('SMPN '),
+                        TextInput::make('tahun_lulus')->label('Tahun Lulus SMP')->default('2025')
+                    ]),
+                ]),
                 Card::make()->schema([
                     Fieldset::make('Data Pribadi | Sesuai Kartu Keluarga')
                         ->schema([
-                            TextInput::make('nik')->label('NIK')->numeric()->minLength('9'),
-                            TextInput::make('nisn')->label('NISN')->numeric()->minLength('9'),
-                            TextInput::make('nama_lengkap')->label('Nama Lengkap'),
+                            TextInput::make('nik')->label('NIK')->numeric()->minLength('9')->required(),
+                            TextInput::make('nisn')->label('NISN')->numeric()->minLength('9')->required(),
+                            TextInput::make('nama_lengkap')->label('Nama Lengkap')->required(),
                             Radio::make('jk')->options([
                                 'L' => 'Laki - Laki',
                                 'P' => 'Perempuan'
                             ])->label('Jenis Kelamin'),
-                            TextInput::make('tempat_lahir')->label('Tempat Lahir'),
+                            TextInput::make('tempat_lahir')->label('Tempat Lahir')->required(),
                             DatePicker::make('tgl_lahir')->label('Tanggal Lahir')->default('2008-07-01')->timezone('Asia/Jakarta'),
                             Select::make('agama')->label('Agama')->options([
                                 'Islam' => 'Islam',
@@ -57,11 +63,11 @@ class StudentResource extends Resource
                                 'Buddha' => 'Buddha',
                                 'Khonghucu' => 'Khonghucu',
                             ])->searchable()->default('Islam'),
-                            TextInput::make('anak_ke')->label('Anak ke')->numeric()->maxLength(2),
+                            TextInput::make('anak_ke')->label('Anak ke')->numeric()->maxLength(2)->required(),
                             TextInput::make('provinsi')->label('Provinsi')->default('Jawa Timur'),
                             TextInput::make('kab_kota')->label('Kabupaten/Kota')->default('Kabupaten Madiun'),
                             TextInput::make('kecamatan')->label('Kecamatan')->default('Kare'),
-                            TextInput::make('alamat_lengkap')->label('Alamat Lengkap (Ds, Rt, Rw)'),
+                            TextInput::make('alamat_lengkap')->label('Alamat Lengkap (Ds, Rt, Rw)')->required(),
                             Select::make('tinggal_bersama')->label('Tinggal Bersama')->options([
                                 'Bersama Orang Tua' => 'Bersama Orang Tua',
                                 'Wali' => 'Wali',
@@ -86,24 +92,24 @@ class StudentResource extends Resource
                 ])->columns(2),
                 Card::make()->schema([
                     Fieldset::make('Data Periodik')->schema([
-                        TextInput::make('tb')->label('Tinggi Badan | Cm')->numeric()->maxLength(3),
-                        TextInput::make('bb')->label('Berat Badan | Kg')->numeric()->maxLength(3),
-                        TextInput::make('lk')->label('Lingkar Kepala | Cm')->numeric()->maxLength(3),
-                        TextInput::make('jarak_rumah')->label('Jarak Rumah Ke Sekolah | Km')->numeric()->maxLength(3),
-                        TextInput::make('waktu_tempuh')->label('Waktu tempuh | Menit')->numeric()->maxLength(3),
-                        TextInput::make('jumlah_saudara')->label('Jumlah Saudara')->numeric()->maxLength(1)->default(1),
+                        TextInput::make('tb')->label('Tinggi Badan | Cm')->numeric()->maxLength(3)->required(),
+                        TextInput::make('bb')->label('Berat Badan | Kg')->numeric()->maxLength(3)->required(),
+                        TextInput::make('lk')->label('Lingkar Kepala | Cm')->numeric()->maxLength(3)->required(),
+                        TextInput::make('jarak_rumah')->label('Jarak Rumah Ke Sekolah | Km')->numeric()->maxLength(3)->required(),
+                        TextInput::make('waktu_tempuh')->label('Waktu tempuh | Menit')->numeric()->maxLength(3)->required(),
+                        TextInput::make('jumlah_saudara')->label('Jumlah Saudara')->numeric()->maxLength(1)->default(0),
                         Select::make('jurusan')->label('Jurusan Yang Dipilih')->options([
                             'Teknik Kendaraan Ringan' => 'Teknik Kendaraan Ringan',
                             'Teknik Komputer dan Jaringan' => 'Teknik Komputer dan Jaringan',
                             'Akuntansi' => 'Akuntansi',
                             'Desain Komunikasi Visual' => 'Desain Komunikasi Visual',
-                        ]),
+                        ])->required(),
                     ]),
                 ])->columns(2),
                 Card::make()->schema([
                     Fieldset::make('Data Ibu')->schema([
-                        TextInput::make('nama_ibu')->label('Nama Lengkap Ibu'),
-                        TextInput::make('nik_ibu')->label('NIK Ibu'),
+                        TextInput::make('nama_ibu')->label('Nama Lengkap Ibu')->required(),
+                        TextInput::make('nik_ibu')->label('NIK Ibu')->required(),
                         TextInput::make('tahun_ibu')->label('Tahun Lahir Ibu'),
                         TextInput::make('pendidikan_ibu')->label('Pendidikan Ibu'),
                         TextInput::make('pekerjaan_ibu')->label('Pekerjaan Ibu'),
@@ -112,8 +118,8 @@ class StudentResource extends Resource
                 ])->columns(2),
                 Card::make()->schema([
                     Fieldset::make('Data Ayah')->schema([
-                        TextInput::make('nama_ayah')->label('Nama Lengkap Ayah'),
-                        TextInput::make('nik_ayah')->label('NIK Ayah'),
+                        TextInput::make('nama_ayah')->label('Nama Lengkap Ayah')->required(),
+                        TextInput::make('nik_ayah')->label('NIK Ayah')->required(),
                         TextInput::make('tahun_ayah')->label('Tahun Lahir Ayah'),
                         TextInput::make('pendidikan_ayah')->label('Pendidikan Ayah'),
                         TextInput::make('pekerjaan_ayah')->label('Pekerjaan Ayah'),
@@ -121,26 +127,20 @@ class StudentResource extends Resource
                     ]),
                 ]),
                 Card::make()->schema([
-                    Fieldset::make('Data Pendukung')->schema([
-                        TextInput::make('asal_sekolah')->label('Asal Sekolah')->default('SMPN '),
-                        TextInput::make('no_wa_wali')->label('No Whatsapp Wali | Format 62')->default('62'),
-                        Radio::make('kps_pkh')->options([
-                            'true' => 'Memiliki KPS PKH',
-                            'false' => 'Tidak Memiliki KPS PKH',
-                        ])->inline()->label(''),
+                    Fieldset::make('Keperluan PIP')->schema([
+                        TextInput::make('nomor_kartu')->label('Nomor Kartu KIP'),
+                        TextInput::make('nama_kartu')->label('Nama di Kartu KIP'),
                         Radio::make('kip')->options([
                             'true' => 'Memiliki KIP',
                             'false' => 'Tidak Memiliki KIP',
                         ])->inline()->label(''),
-
                     ]),
+
                 ]),
                 Card::make()->schema([
                     Fieldset::make('File Pendukung')->schema([
-                        FileUpload::make('url_pkh')->label('Softcopy KPS'),
                         FileUpload::make('url_kip')->label('Softcopy KIP'),
                         FileUpload::make('url_kk')->label('Softcopy Kartu Keluarga'),
-                        FileUpload::make('url_ijazah')->label('Softcopy Ijazah/SKL'),
                         Hidden::make('operator')->default(Auth::user()->name)
                     ]),
                 ])
