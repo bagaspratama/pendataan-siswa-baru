@@ -22,6 +22,11 @@ class UserResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user';
     protected static ?string $navigationLabel = 'Data User';
 
+    public static function getNavigationSort(): ?int
+{
+    return 3; // angka lebih kecil muncul lebih dulu
+}
+
     public static function form(Form $form): Form
     {
         return $form

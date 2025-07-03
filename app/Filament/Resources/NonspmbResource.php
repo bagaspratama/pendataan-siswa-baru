@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\StudentResource\Pages;
-use App\Filament\Resources\StudentResource\RelationManagers;
-use App\Models\Student;
+use App\Filament\Resources\NonspmbResource\Pages;
+use App\Filament\Resources\NonspmbResource\RelationManagers;
+use App\Models\Nonspmb;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\DatePicker;
@@ -18,28 +18,24 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
-use pxlrbt\FilamentExcel\Actions\Pages\ExportAction;
-use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
-class StudentResource extends Resource
+class NonspmbResource extends Resource
 {
-    protected static ?string $model = Student::class;
+    protected static ?string $model = Nonspmb::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-database';
-    protected static ?string $navigationLabel = 'Data PD';
+    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationLabel = 'Data PD Non SPMB';
 
-public static function getNavigationSort(): ?int
-{
-    return 1; // angka lebih kecil muncul lebih dulu
-}
-    public static function form(Form $form): Form
+    public static function getNavigationSort(): ?int
     {
+        return 2; // angka lebih kecil muncul lebih dulu
+    }
+    public static function form(Form $form): Form
+   {
         return $form
             ->schema([
                   Card::make()->schema([
@@ -169,7 +165,6 @@ public static function getNavigationSort(): ?int
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-
             ]);
     }
 
@@ -180,13 +175,12 @@ public static function getNavigationSort(): ?int
         ];
     }
 
-
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListStudents::route('/'),
-            'create' => Pages\CreateStudent::route('/create'),
-            'edit' => Pages\EditStudent::route('/{record}/edit'),
+            'index' => Pages\ListNonspmbs::route('/'),
+            'create' => Pages\CreateNonspmb::route('/create'),
+            'edit' => Pages\EditNonspmb::route('/{record}/edit'),
         ];
     }
 }
